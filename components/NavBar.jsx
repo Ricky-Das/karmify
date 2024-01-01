@@ -4,6 +4,8 @@ import {
   Ionicons,
   MaterialCommunityIcons,
   AntDesign,
+  FontAwesome,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -11,6 +13,8 @@ import AppColors from "./AppColors";
 
 const NavBar = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  //TODO: Add Logic to check if user is a donor
+  const isDonor = true;
 
   return (
     <View style={[styles.container, { paddingBottom: insets.bottom }]}>
@@ -26,9 +30,19 @@ const NavBar = ({ navigation }) => {
         style={styles.button}
         onPress={() => router.push("/requests")}
       >
-        <Ionicons name="add" size={24} color="black" />
+        <FontAwesome5 name="clipboard-list" size={24} color="black" />
         <Text style={styles.text}>Requests</Text>
       </TouchableOpacity>
+
+      {isDonor && (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/requests")}
+        >
+          <AntDesign name="plus" size={24} color="black" />
+          <Text style={styles.text}>Submissions</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity
         style={styles.button}

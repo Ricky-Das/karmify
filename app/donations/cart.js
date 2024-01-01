@@ -22,13 +22,31 @@ function cart() {
   const { cart } = useCart();
   const [showNotification, setShowNotification] = useState(false);
   const [notificationKey, setNotificationKey] = useState(0);
+  const [notificationMessage, setNotificationMessage] = useState("");
+
+  const isCartOverLimit = (currentNumItems) => {
+    //TODO: Implement this with backend if necessary to check if they have obtained more items in the past month
+    const previouslyObtainedItems = 0;
+    if (currentNumItems.length > 5) return true;
+    if (currentNumItems.length + previouslyObtainedItems > 5) return true;
+
+    return false;
+  };
 
   const handleCheckout = () => {
+    if (isCartOverLimit(cart)) {
+      setShowNotification(true);
+      setNotificationKey((prevKey) => prevKey + 1);
+      setNotificationMessage("You have reached your monthly limit of 5 items.");
+      return;
+    }
     if (cart.length === 0) {
       setShowNotification(true);
       setNotificationKey((prevKey) => prevKey + 1);
+      setNotificationMessage("Add items to your cart before checking out.");
       return;
     }
+
     router.push("donations/checkout/select-address");
   };
 
@@ -39,7 +57,7 @@ function cart() {
     <SafeAreaView>
       <Notification
         key={notificationKey}
-        text={"Add items to your cart before checking out."}
+        text={notificationMessage}
         isVisible={showNotification}
         type={"Danger"} // Can be "Success", "Warning", or "Danger"
       />

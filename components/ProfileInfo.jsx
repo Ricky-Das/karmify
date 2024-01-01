@@ -6,7 +6,6 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 function ProfileInfo({ imageUri, profileName, profileEmail, profilePhone }) {
-  console.log(imageUri);
   return (
     <View style={styles.profileInfoContainer}>
       <View style={styles.profileDetailRow}>

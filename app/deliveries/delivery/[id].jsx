@@ -37,11 +37,6 @@ function Page() {
     fetchDelivery();
   }, [id]);
 
-  if (delivery) {
-    console.log(delivery.driverName);
-    console.log(delivery.driverImageUri);
-  }
-
   return (
     <View style={styles.container}>
       <SmallTopHeader>Delivery Information</SmallTopHeader>
