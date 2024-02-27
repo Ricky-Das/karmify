@@ -27,6 +27,7 @@ const _layout = () => {
         setAddressesList(addresses)
         setDeliveriesList(deliveries)
         console.log("recieved data")
+        
         setLoading(false)
     }
 
