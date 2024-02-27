@@ -15,6 +15,8 @@ import getRequestById from "../../backend/backendFunctions/getRequestById";
 import AccentHeader from "../../components/AccentHeader";
 import AccentButton from "../../components/AccentButton";
 import Button from "../../components/Button";
+import { createRequestItem, getRequestItems } from "../../backend/firebase-functions";
+import { setRequestsList } from "../../backend/backendLists/requestsTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -24,8 +26,10 @@ function Page() {
   const [requestDescription, setRequestDescription] = useState("");
   const [requestCategory, setRequestCategory] = useState("");
 
-  const handleComplete = () => {
-    // TODO: Add "Add Request" logic here
+  const handleComplete = async () => {
+    createRequestItem(requestTitle, requestDescription, requestCategory, "1")
+    const requests =  await getRequestItems()
+    setRequestsList(requests)
     router.replace("/requests");
   };
 
@@ -67,7 +71,7 @@ function Page() {
           </ScrollView>
         </View>
         <View style={styles.buttonContainer}>
-          <AccentButton onPress={handleComplete}>Complete</AccentButton>
+          <AccentButton onPress={async () => handleComplete()}>Complete</AccentButton>
           <View style={{ height: 18 }}></View>
           <Button isBackButton>Go Back</Button>
         </View>

@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 import AppColors from "../components/AppColors";
 import { CartProvider } from "../components/CartContext";
 
-import { getAddresses, getDonationItems, getRequests, getDeliveries } from "../backend/firebase-functions";
+import { getAddressItems, getDonationItems, getRequestItems, getDeliveryItems } from "../backend/firebase-functions";
 import { setDonationList } from "../backend/backendLists/donationsTable";
 import { setAddressesList } from "../backend/backendLists/addressTable";
 import { setRequestsList } from "../backend/backendLists/requestsTable";
@@ -18,9 +18,9 @@ const _layout = () => {
   useEffect(() => {
     const fetchBackendData = async() => {
         const donations =  await getDonationItems()
-        const requests =  await getRequests()
-        const addresses =  await getAddresses()
-        const deliveries = await getDeliveries()
+        const requests =  await getRequestItems()
+        const addresses =  await getAddressItems()
+        const deliveries = await getDeliveryItems()
       
         setDonationList(donations)
         setRequestsList(requests)

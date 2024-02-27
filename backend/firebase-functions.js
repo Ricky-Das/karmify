@@ -1,5 +1,5 @@
 import { db } from "./firebase-config";
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where, doc, deleteDoc, setDoc } from "firebase/firestore";
 
 const donationItemsRef = collection(db, "DonationItems")
 const requestsItmesRef = collection(db, "Requests")
@@ -16,7 +16,12 @@ export const getDonationItems = async () => {
     }
 }
 
-export const getRequests = async () => {
+export const deleteDonationItem = async (id) => {
+    await deleteDoc(doc(donationItemsRef, id));
+}
+
+
+export const getRequestItems = async () => {
     try {
         const q = query(requestsItmesRef, where('userId', '==', '1'))
         const data = await getDocs(q)
@@ -27,7 +32,22 @@ export const getRequests = async () => {
     }
 }
 
-export const getAddresses = async () => {
+export const createRequestItem = async (title, description, category, userId) => {
+    await setDoc(doc(requestsItmesRef), {
+        title: title,
+        description: description,
+        category: category,
+        dateAdded: "Placeholder date",
+        userId: userId
+      })
+}
+
+export const deleteRequestItem = async (id) => {
+    await deleteDoc(doc(requestsItmesRef, id));
+}
+
+
+export const getAddressItems = async () => {
     try {
         const q = query(addressesItemsRef, where('userId', '==', '1'))
         const data = await getDocs(q)
@@ -38,7 +58,12 @@ export const getAddresses = async () => {
     }
 }
 
-export const getDeliveries = async () => {
+export const deleteAddressItem = async (id) => {
+    await deleteDoc(doc(addressesItemsRef, id));
+}
+
+
+export const getDeliveryItems = async () => {
     try {
         const q = query(deliveriesItemsRef, where('userId', '==', '1'))
         const data = await getDocs(q)
@@ -47,4 +72,8 @@ export const getDeliveries = async () => {
     } catch (err) {
         console.error(err)
     }
+}
+
+export const deleteDeliveryItem = async (id) => {
+    await deleteDoc(doc(deliveriesItemsRef, id));
 }
