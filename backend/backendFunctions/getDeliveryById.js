@@ -1,5 +1,5 @@
-import Deliveries from "../dummyBackend/deliveriesTable";
+import { getDeliveriesList } from "../backendLists/deliveriesTable";
 
 export default function getDeliveryById(id) {
-  return Deliveries.find((delivery) => delivery.id === id);
+  return getDeliveriesList().find((delivery) => delivery.id === id);
 }

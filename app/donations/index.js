@@ -3,11 +3,13 @@ import { StyleSheet, Dimensions, FlatList, SafeAreaView } from "react-native";
 import DonationsHeader from "../../components/donationsScreen/DonationsHeader";
 import AppColors from "../../components/AppColors";
 import SearchBar from "../../components/SearchBar";
-import getAllDonations from "../../backend/backendFunctions/getAllDonations";
 import DonationCard from "../../components/DonationCard";
 import Fuse from "fuse.js";
 
+import { getDonationList } from "../../backend/backendLists/donationsTable";
+
 const SCREEN_HEIGHT = Dimensions.get("window").height;
+
 
 export default Page = () => {
   const [allDonations, setAllDonations] = useState([]);
@@ -16,7 +18,7 @@ export default Page = () => {
 
   useEffect(() => {
     const fetchDonations = async () => {
-      const donations = await getAllDonations(); // Assuming this is an async function
+      const donations = getDonationList(); // Assuming this is an async function
       setAllDonations(donations);
       setSearchResults(donations);
     };

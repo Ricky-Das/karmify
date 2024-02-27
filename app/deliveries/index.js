@@ -6,7 +6,7 @@ import LargePlainHeader from "../../components/LargePlainHeader";
 import { FlatList } from "react-native-gesture-handler";
 import Fuse from "fuse.js";
 import DeliveryCard from "../../components/deliveriesScreen/DeliveryCard";
-import getAllDeliveriesByUserId from "../../backend/backendFunctions/getAllDeliveriesByUserId";
+import { getDeliveriesList } from "../../backend/backendLists/deliveriesTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -18,7 +18,7 @@ function index(props) {
 
   useEffect(() => {
     const fetchDeliveries = async () => {
-      const deliveries = await getAllDeliveriesByUserId("1"); // Assuming this is an async function
+      const deliveries = getDeliveriesList() // Assuming this is an async function
       setAllDeliveries(deliveries);
       setSearchResults(deliveries);
     };
