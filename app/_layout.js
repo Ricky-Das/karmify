@@ -17,6 +17,7 @@ const _layout = () => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
+    //move all of this into a handle login function so it only retrieves data once user is authenticated
     const fetchBackendData = async () => {
       await login()
       const donations = await getDonationItems()
