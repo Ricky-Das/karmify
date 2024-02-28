@@ -1,4 +1,4 @@
-import { db } from "./firebase-config";
+import { auth, db } from "./firebase-config";
 import { getDocs, collection, query, where, doc, deleteDoc, setDoc } from "firebase/firestore";
 
 const donationItemsRef = collection(db, "DonationItems")
@@ -23,7 +23,7 @@ export const deleteDonationItem = async (id) => {
 
 export const getRequestItems = async () => {
     try {
-        const q = query(requestsItmesRef, where('userId', '==', '1'))
+        const q = query(requestsItmesRef, where('userId', '==', auth.currentUser.uid))
         const data = await getDocs(q)
         const filteredData = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
         return filteredData
@@ -49,7 +49,7 @@ export const deleteRequestItem = async (id) => {
 
 export const getAddressItems = async () => {
     try {
-        const q = query(addressesItemsRef, where('userId', '==', '1'))
+        const q = query(addressesItemsRef, where('userId', '==', auth.currentUser.uid))
         const data = await getDocs(q)
         const filteredData = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
         return filteredData
@@ -65,7 +65,7 @@ export const deleteAddressItem = async (id) => {
 
 export const getDeliveryItems = async () => {
     try {
-        const q = query(deliveriesItemsRef, where('userId', '==', '1'))
+        const q = query(deliveriesItemsRef, where('userId', '==', auth.currentUser.uid))
         const data = await getDocs(q)
         const filteredData = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
         return filteredData

@@ -17,6 +17,7 @@ import AccentButton from "../../components/AccentButton";
 import Button from "../../components/Button";
 import { createRequestItem, getRequestItems } from "../../backend/firebase-functions";
 import { setRequestsList } from "../../backend/backendLists/requestsTable";
+import { auth } from "../../backend/firebase-config";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -27,7 +28,7 @@ function Page() {
   const [requestCategory, setRequestCategory] = useState("");
 
   const handleComplete = async () => {
-    createRequestItem(requestTitle, requestDescription, requestCategory, "1")
+    createRequestItem(requestTitle, requestDescription, requestCategory, auth.currentUser.uid)
     const requests =  await getRequestItems()
     setRequestsList(requests)
     router.replace("/requests");
