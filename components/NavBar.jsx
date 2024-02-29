@@ -37,7 +37,7 @@ const NavBar = ({ navigation }) => {
       {isDonor && (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("/requests")}
+          onPress={() => router.push("/submissions")}
         >
           <AntDesign name="plus" size={24} color="black" />
           <Text style={styles.text}>Submissions</Text>
