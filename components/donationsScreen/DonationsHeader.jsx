@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import DonationsBg from "../../assets/DonationsBg.png";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -20,12 +21,7 @@ function DonationsHeader(props) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={{
-          uri: "https://cdn.discordapp.com/attachments/747489327260631099/1179896082117963786/donations_header.png?ex=657b72db&is=6568fddb&hm=7383935c24f888cf353549a7e3ce8141ca5a8c8f6478d560a30c4276aa86efe5&",
-        }}
-        style={styles.image}
-      >
+      <ImageBackground source={DonationsBg} style={styles.image}>
         <View style={styles.innerContainer}>
           <Text style={styles.text}>Donations</Text>
           <View style={styles.blurbContainer}>

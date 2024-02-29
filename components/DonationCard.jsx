@@ -12,12 +12,12 @@ import AppColors from "./AppColors";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const DonationCard = ({ donationInfo }) => {
+const DonationCard = ({ donationInfo, addToCartButton }) => {
   return (
     <Link
       href={{
         pathname: "/donations/donation/[id]",
-        params: { id: donationInfo.id },
+        params: { id: donationInfo.id, addCartButton: addToCartButton },
       }}
       asChild
     >

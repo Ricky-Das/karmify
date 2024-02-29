@@ -8,11 +8,9 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { router } from "expo-router";
 import SmallTopHeader from "../../components/SmallTopHeader";
 import AppColors from "../../components/AppColors";
-import getRequestById from "../../backend/backendFunctions/getRequestById";
-import AccentHeader from "../../components/AccentHeader";
 import AccentButton from "../../components/AccentButton";
 import Button from "../../components/Button";
 

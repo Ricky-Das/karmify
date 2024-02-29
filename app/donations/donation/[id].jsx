@@ -18,7 +18,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 function Page() {
   const params = useLocalSearchParams();
-  const { id } = params;
+  const { id, addCartButton } = params;
   const [donation, setDonation] = useState(null);
   const { cart, addToCart } = useCart();
 
@@ -90,9 +90,11 @@ function Page() {
             </ScrollView>
           </View>
           <View style={styles.buttonContainer}>
-            <AccentButton onPress={() => handleAddItem(donation)}>
-              Add To Cart
-            </AccentButton>
+            {!addCartButton ? (
+              <AccentButton onPress={() => handleAddItem(donation)}>
+                Add To Cart
+              </AccentButton>
+            ) : null}
 
             <View style={{ height: 18 }}></View>
             <Button isBackButton>Go Back</Button>
