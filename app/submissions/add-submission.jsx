@@ -16,6 +16,8 @@ import Button from "../../components/Button";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
 import { Image } from "react-native";
+import { createDonationItem, getDonationItems } from "../../backend/firebase-functions";
+import { setDonationList } from "../../backend/backendLists/donationsTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -23,20 +25,26 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 function Page() {
   const [donationTitle, setdonationTitle] = useState("");
   const [donationDescription, setdonationDescription] = useState("");
-  const [donationCategory, setdonationCategory] = useState("");
+  const [donationQuantity, setDonationQuantity] = useState("");
+  const [donationCondition, setDonationCondition] = useState("");
+  const [donationLocation, setDonationLocation] = useState("");
   const [donationImage, setDonationImage] = useState(null);
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (
       !donationTitle ||
       !donationDescription ||
-      !donationCategory ||
+      !donationQuantity ||
+      !donationCondition ||
+      !donationLocation ||
       !donationImage
     ) {
       Alert.alert("Please fill out all fields and add an image");
       return;
     }
-    // TODO: Add "Add Donation" logic here
+    await createDonationItem(donationTitle, donationDescription, donationQuantity, donationCondition, donationLocation, donationImage)
+    const donationItems = await getDonationItems()
+    setDonationList(donationItems)
     router.replace("/submissions");
   };
 
@@ -55,8 +63,8 @@ function Page() {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setDonationImage(result.uri);
+    if (!result.canceled) {
+      setDonationImage(result.assets[0].uri);
     }
   };
 
@@ -93,8 +101,8 @@ function Page() {
             </Text>
             <TextInput
               style={styles.input}
-              value={donationCategory}
-              onChangeText={setdonationCategory}
+              value={donationQuantity}
+              onChangeText={setDonationQuantity}
               placeholder="Enter the quantity of your donation"
             />
 
@@ -103,16 +111,16 @@ function Page() {
             </Text>
             <TextInput
               style={styles.input}
-              value={donationCategory}
-              onChangeText={setdonationCategory}
+              value={donationCondition}
+              onChangeText={setDonationCondition}
               placeholder="Enter the condition of your donation"
             />
 
             <Text style={styles.label}>Donation Location (City, State)</Text>
             <TextInput
               style={styles.input}
-              value={donationCategory}
-              onChangeText={setdonationCategory}
+              value={donationLocation}
+              onChangeText={setDonationLocation}
               placeholder="Enter the location you are donating from"
             />
 
@@ -128,7 +136,7 @@ function Page() {
           </ScrollView>
         </View>
         <View style={styles.buttonContainer}>
-          <AccentButton onPress={handleComplete}>Complete</AccentButton>
+          <AccentButton onPress={async () => handleComplete()}>Complete</AccentButton>
           <View style={{ height: 18 }}></View>
           <Button isBackButton>Go Back</Button>
         </View>

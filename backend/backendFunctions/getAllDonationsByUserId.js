@@ -5,6 +5,5 @@ import { getDonationList } from "../backendLists/donationsTable";
 
 export default function getAllRequestsByUserId(userId) {
   const donations = getDonationList();
-  console.log("Donations:", donations);
   return donations.filter((donation) => donation.userId === userId);
 }
