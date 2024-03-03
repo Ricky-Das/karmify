@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, Dimensions, StyleSheet } from "react-native";
 import LargePlainHeader from "../../components/LargePlainHeader";
 import ProfileInfo from "../../components/ProfileInfo";
 import AccentButton from "../../components/AccentButton";
+import { auth } from "../../backend/firebase-config";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;

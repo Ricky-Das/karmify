@@ -3,11 +3,11 @@ import { View, Text, SafeAreaView, Dimensions, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import SearchBar from "../../components/SearchBar";
 import LargePlainHeader from "../../components/LargePlainHeader";
-import getAllRequestsByUserId from "../../backend/backendFunctions/getAllRequestsByUserId";
 import RequestCard from "../../components/requests/RequestCard";
 import { FlatList } from "react-native-gesture-handler";
 import AccentButton from "../../components/AccentButton";
 import Fuse from "fuse.js";
+import { getRequestsList } from "../../backend/backendLists/requestsTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -19,7 +19,7 @@ function index(props) {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const requests = await getAllRequestsByUserId("1"); // Assuming this is an async function
+      const requests =  getRequestsList(); // Assuming this is an async function
       setAllRequests(requests);
       setSearchResults(requests);
     };

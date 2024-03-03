@@ -16,6 +16,8 @@ import getRequestById from "../../../backend/backendFunctions/getRequestById";
 import AccentHeader from "../../../components/AccentHeader";
 import DeleteButton from "../../../components/DeleteButton";
 import Button from "../../../components/Button";
+import { deleteRequestItem, getRequestItems } from "../../../backend/firebase-functions";
+import { getRequestsList, setRequestsList } from "../../../backend/backendLists/requestsTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -34,8 +36,10 @@ function Page() {
     fetchRequest();
   }, [id]);
 
-  const handleDelete = () => {
-    // TODO: Add delete logic here
+  const handleDelete = async () => {
+    deleteRequestItem(id)
+    const requests =  await getRequestItems()
+    setRequestsList(requests)
     router.push("/requests");
   };
 
@@ -64,7 +68,7 @@ function Page() {
               <Text style={{ fontSize: 22 }}>{request.category}</Text>
             </View>
             <View style={styles.buttonContainer}>
-              <DeleteButton onPress={() => handleDelete()}>
+              <DeleteButton onPress={async () => await handleDelete()}>
                 Delete Request
               </DeleteButton>
 

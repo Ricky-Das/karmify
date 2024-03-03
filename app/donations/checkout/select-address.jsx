@@ -10,11 +10,11 @@ import { router } from "expo-router";
 import SmallTopHeader from "../../../components/SmallTopHeader";
 import AppColors from "../../../components/AppColors";
 import AccentHeader from "../../../components/AccentHeader";
-import getAllAddressesByUserId from "../../../backend/backendFunctions/getAllAddressesByUserId";
 import AddressCard from "../../../components/AddressCard";
 import AccentButton from "../../../components/AccentButton";
 import Button from "../../../components/Button";
 import Notification from "../../../components/Notification";
+import { getAddressesList } from "../../../backend/backendLists/addressTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -28,7 +28,7 @@ function SelectAddress() {
 
   useEffect(() => {
     const fetchAddresses = async () => {
-      const addresses = await getAllAddressesByUserId(1);
+      const addresses =  getAddressesList();
       setAllAddresses(addresses);
     };
 

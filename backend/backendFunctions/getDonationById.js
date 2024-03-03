@@ -1,5 +1,5 @@
-import Donations from "../dummyBackend/donationsTable";
+import { getDonationList } from "../backendLists/donationsTable";
 
 export default function getDonationById(id) {
-  return Donations.find((donation) => donation.id === id);
+  return getDonationList().find((donation) => donation.id === id);
 }

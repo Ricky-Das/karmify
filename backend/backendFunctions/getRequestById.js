@@ -1,7 +1,6 @@
-import Requests from "../dummyBackend/requestsTable";
+import { getRequestsList } from "../backendLists/requestsTable";
 
 export default async function getRequestById(RequestId) {
-  const request = await Requests.find((request) => request.id === RequestId);
-  console.log(request);
+  const request = await getRequestsList().find((request) => request.id === RequestId);
   return request;
 }
