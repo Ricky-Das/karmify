@@ -24,7 +24,9 @@ function index(props) {
 
   useEffect(() => {
     const fetchSubmissions = async () => {
-      const submissions = await getAllDonationsByUserId("1"); // Assuming this is an async function
+      const submissions = await getAllDonationsByUserId(
+        "YmlIC1KougX6CK0UPiP2MukHCTT2"
+      ); // Assuming this is an async function
       setAllSubmissions(submissions);
       setSearchResults(submissions);
     };
