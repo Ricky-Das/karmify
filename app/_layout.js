@@ -4,6 +4,10 @@ import { Slot } from "expo-router";
 import NavBar from "../components/NavBar";
 import AppColors from "../components/AppColors";
 import { CartProvider } from "../components/CartContext";
+import LoginScreen from "./auth/login";
+import RegisterScreen from "./auth/register";
+import { NavigationContainer } from '@react-navigation/native';
+
 
 import { getAddressItems, getDonationItems, getRequestItems, getDeliveryItems } from "../backend/firebase-functions";
 import { setDonationList } from "../backend/backendLists/donationsTable";
@@ -30,7 +34,6 @@ const _layout = () => {
       setAddressesList(addresses)
       setDeliveriesList(deliveries)
       console.log("recieved data")
-
       setLoading(false)
     }
 
@@ -38,7 +41,11 @@ const _layout = () => {
   }, [])
 
   if (isLoading) {
-    return null
+    return (
+      <View style={styles.container}>
+        <LoginScreen />
+      </View>
+    )
   }
   else {
     return (
