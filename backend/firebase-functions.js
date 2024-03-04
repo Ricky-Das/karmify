@@ -1,4 +1,4 @@
-import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
+import { uploadBytes, getDownloadURL, ref, deleteObject } from "firebase/storage";
 import { auth, db, storage } from "./firebase-config";
 import uuid from "react-native-uuid";
 import {
@@ -39,29 +39,34 @@ export const createDonationItem = async (
   imageURI
 ) => {
   const newId = uuid.v4().slice(0, 23).replace(/-/g, "");
+  const docImage = await uploadImage(imageURI,  newId)
   await setDoc(doc(donationItemsRef, newId), {
     title: title,
     description: description,
     quantity: quantity,
     condition: condition,
     location: location,
-    imageURI: await uploadImage(imageURI,  newId),  
+    imageURI: docImage,  
     userId: auth.currentUser.uid,
   });
 };
 
 export const uploadImage = async (image, donationId) => {
-  const imageRef = ref(storage, "images/" + donationId);
-  const file = await fetch(image);
-  const blob = await file.blob();
-  await uploadBytes(imageRef, blob)
-  return getDownloadURL(imageRef)
+    const imageRef = ref(storage, "images/" + donationId);
+    const file = await fetch(image);
+    const blob = await file.blob();
+    await uploadBytes(imageRef, blob)
+    return getDownloadURL(imageRef)
 };
 
 export const deleteDonationItem = async (id) => {
-  await deleteDoc(doc(donationItemsRef, id));
-  const imageRef = ref(storage, "images/" + id);
-  await deleteDoc(imageRef);
+  try {
+    await deleteDoc(doc(donationItemsRef, id));
+    const imageRef = ref(storage, "images/" + id);
+    await deleteObject(imageRef);
+  } catch(err) {
+    console.log("delete error", err)
+  }
 };
 
 export const getRequestItems = async () => {

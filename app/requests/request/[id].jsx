@@ -37,7 +37,7 @@ function Page() {
   }, [id]);
 
   const handleDelete = async () => {
-    deleteRequestItem(id)
+    await deleteRequestItem(id)
     const requests =  await getRequestItems()
     setRequestsList(requests)
     router.push("/requests");

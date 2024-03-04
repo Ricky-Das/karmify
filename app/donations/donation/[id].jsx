@@ -11,7 +11,11 @@ import getDonationById from "../../../backend/backendFunctions/getDonationById";
 import AccentHeader from "../../../components/AccentHeader";
 import AccentButton from "../../../components/AccentButton";
 import Button from "../../../components/Button";
+import DeleteButton from "../../../components/DeleteButton";
 import Notification from "../../../components/Notification";
+
+import { deleteDonationItem, getDonationItems } from "../../../backend/firebase-functions";
+import { setDonationList } from "../../../backend/backendLists/donationsTable";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -54,6 +58,13 @@ function Page() {
     setTimeout(() => setShowNotification(false), 3500);
   };
 
+  const handleDelete = async () => {
+    await deleteDonationItem(id);
+    const donationItems = await getDonationItems();
+    setDonationList(donationItems);
+    router.push("/submissions");
+  }
+
   return (
     <View style={styles.container}>
       <SmallTopHeader>Donation Information</SmallTopHeader>
@@ -95,6 +106,11 @@ function Page() {
                 Add To Cart
               </AccentButton>
             ) : null}
+            {addCartButton ? (
+              <DeleteButton onPress={async () => await handleDelete()}>
+                Delete Request
+              </DeleteButton>
+            ): null}
 
             <View style={{ height: 18 }}></View>
             <Button isBackButton>Go Back</Button>
