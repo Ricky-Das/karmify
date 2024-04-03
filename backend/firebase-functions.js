@@ -52,11 +52,16 @@ export const createDonationItem = async (
 };
 
 export const uploadImage = async (image, donationId) => {
-    const imageRef = ref(storage, "images/" + donationId);
-    const file = await fetch(image);
-    const blob = await file.blob();
-    await uploadBytes(imageRef, blob)
-    return getDownloadURL(imageRef)
+    try {
+      const imageRef = ref(storage, "images/" + donationId);
+      const file = await fetch(image);
+      const blob = await file.blob();
+      await uploadBytes(imageRef, blob);
+      return getDownloadURL(imageRef);
+    } catch (err) {
+      console.error(err);
+      return ""
+    }
 };
 
 export const deleteDonationItem = async (id) => {
@@ -91,11 +96,13 @@ export const createRequestItem = async (
   description,
   category,
 ) => {
+  const today = new Date();
+  const date = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
   await setDoc(doc(requestsItmesRef), {
     title: title,
     description: description,
     category: category,
-    dateAdded: "Placeholder date",
+    dateAdded: date,
     userId: auth.currentUser.uid,
   });
 };
